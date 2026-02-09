@@ -8,10 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.yandex.praktikum.pageObject.OrderDataForm;
-import ru.yandex.praktikum.pageObject.DriverUtils;
-import ru.yandex.praktikum.pageObject.MainPage;
-import ru.yandex.praktikum.pageObject.PersonDataForm;
+import ru.yandex.praktikum.pageobject.OrderDataForm;
+import ru.yandex.praktikum.pageobject.DriverUtils;
+import ru.yandex.praktikum.pageobject.MainPage;
+import ru.yandex.praktikum.pageobject.PersonDataForm;
 
 public class CreateOrderTest {
     WebDriver driver;
@@ -27,7 +27,7 @@ public class CreateOrderTest {
 "firefox, downButton, Егор,   Смирнов,    Москва, Фрунзенская,   grey,  79536452121, 05.02.2026, пятеро суток,Тише едешь - дальше будешь!",
 "firefox, downButton, Марина, Василькова, Москва, Университет,   black, 79536455589, 06.02.2026, сутки,       Тише едешь - дальше будешь!"
     })
-    public void InputParameters(String driverType, String buttonType,
+    public void inputParameters(String driverType, String buttonType,
                                 String name, String surname, String city,
                                 String metroSelect, String color, String telephone,
                                 String date, String term, String comment) throws InterruptedException {

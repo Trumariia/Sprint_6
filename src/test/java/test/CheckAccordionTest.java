@@ -8,8 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.praktikum.pageObject.DriverUtils;
-import ru.yandex.praktikum.pageObject.MainPage;
+import ru.yandex.praktikum.pageobject.DriverUtils;
+import ru.yandex.praktikum.pageobject.MainPage;
 
 import java.time.Duration;
 
@@ -29,7 +29,7 @@ public class CheckAccordionTest {
             "6, 'Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.'",
             "7, 'Да, обязательно. Всем самокатов! И Москве, и Московской области.'"
     })
-    public void Check_question(String questionNumber, String answer) throws InterruptedException {
+    public void checkQuestion(String questionNumber, String answer) throws InterruptedException {
 
         MainPage mainPage = new MainPage(driver);
 
@@ -44,8 +44,10 @@ public class CheckAccordionTest {
         // клик на него
         questionElement.click();
 
-        //задержка
-        Thread.sleep(500);
+        //добавить ожидание
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(mainPage.getAccordionPanelBy(questionNumber)));
+
 
         // найти ответ
         WebElement answerElement = mainPage.getAccordionPanel(questionNumber);
