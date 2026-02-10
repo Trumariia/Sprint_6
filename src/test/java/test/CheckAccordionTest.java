@@ -1,22 +1,17 @@
 package test;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.praktikum.pageobject.DriverUtils;
 import ru.yandex.praktikum.pageobject.MainPage;
-
 import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CheckAccordionTest {
-    WebDriver driver = new ChromeDriver();
+public class CheckAccordionTest extends BaseTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -31,6 +26,7 @@ public class CheckAccordionTest {
     })
     public void checkQuestion(String questionNumber, String answer) {
 
+        driver = new ChromeDriver();
         MainPage mainPage = new MainPage(driver);
 
         //добавить ожидание драйвера
@@ -53,10 +49,5 @@ public class CheckAccordionTest {
 
         // сравнить со значением Текста
         assertEquals(answer, answerElement.getText(), "Ошибка при сравнении текста");
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
     }
 }

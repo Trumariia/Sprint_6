@@ -1,10 +1,8 @@
 package test;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,19 +14,18 @@ import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.PersonDataForm;
 import java.time.Duration;
 
-public class CreateOrderTest {
-    WebDriver driver;
+public class CreateOrderTest extends BaseTest {
 
     @ParameterizedTest
     @CsvSource({
-"chrome,  upButton,   Джек,   Капитан,    Москва, Воробьёвы горы,grey,  78216452124, 05.02.2026, двое суток,  Работай с душой!",
-"chrome,  upButton,   Юлия,   Соколова,   Москва, Черкизовская,  black, 79216452252, 06.02.2026, трое суток,  Работай с душой!",
-"chrome,  downButton, Егор,   Смирнов,    Москва, Фрунзенская,   grey,  79536452121, 05.02.2026, пятеро суток,Тише едешь - дальше будешь!",
-"chrome,  downButton, Марина, Василькова, Москва, Университет,   black, 79536455589, 06.02.2026, сутки,       Тише едешь - дальше будешь!",
-"firefox, upButton,   Джек,   Капитан,    Москва, Воробьёвы горы,grey,  78216452124, 05.02.2026, двое суток,  Работай с душой!",
-"firefox, upButton,   Юлия,   Соколова,   Москва, Черкизовская,  black, 79216452252, 06.02.2026, трое суток,  Работай с душой!",
-"firefox, downButton, Егор,   Смирнов,    Москва, Фрунзенская,   grey,  79536452121, 05.02.2026, пятеро суток,Тише едешь - дальше будешь!",
-"firefox, downButton, Марина, Василькова, Москва, Университет,   black, 79536455589, 06.02.2026, сутки,       Тише едешь - дальше будешь!"
+            "chrome,  upButton,   Джек,   Капитан,    Москва, Воробьёвы горы,grey,  78216452124, 05.02.2026, двое суток,  Работай с душой!",
+            "chrome,  upButton,   Юлия,   Соколова,   Москва, Черкизовская,  black, 79216452252, 06.02.2026, трое суток,  Работай с душой!",
+            "chrome,  downButton, Егор,   Смирнов,    Москва, Фрунзенская,   grey,  79536452121, 05.02.2026, пятеро суток,Тише едешь - дальше будешь!",
+            "chrome,  downButton, Марина, Василькова, Москва, Университет,   black, 79536455589, 06.02.2026, сутки,       Тише едешь - дальше будешь!",
+            "firefox, upButton,   Джек,   Капитан,    Москва, Воробьёвы горы,grey,  78216452124, 05.02.2026, двое суток,  Работай с душой!",
+            "firefox, upButton,   Юлия,   Соколова,   Москва, Черкизовская,  black, 79216452252, 06.02.2026, трое суток,  Работай с душой!",
+            "firefox, downButton, Егор,   Смирнов,    Москва, Фрунзенская,   grey,  79536452121, 05.02.2026, пятеро суток,Тише едешь - дальше будешь!",
+            "firefox, downButton, Марина, Василькова, Москва, Университет,   black, 79536455589, 06.02.2026, сутки,       Тише едешь - дальше будешь!"
     })
     public void inputParameters(String driverType, String buttonType,
                                 String name, String surname, String city,
@@ -61,8 +58,8 @@ public class CreateOrderTest {
 
         PersonDataForm personForm = new PersonDataForm(driver);
 
-       new WebDriverWait(driver, Duration.ofSeconds(3))
-               .until(ExpectedConditions.visibilityOfElementLocated(personForm.getByName()));
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(personForm.getByName()));
 
         //найти поле Имя, ввести значение
         personForm.getName().sendKeys(name);
@@ -121,9 +118,5 @@ public class CreateOrderTest {
         WebElement successEl = form.getSuccessOrderWindow();
         Assertions.assertTrue(successEl.getText().contains("Заказ оформлен"));
     }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-    }
 }
+
