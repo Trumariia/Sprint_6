@@ -29,7 +29,7 @@ public class CheckAccordionTest {
             "6, 'Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.'",
             "7, 'Да, обязательно. Всем самокатов! И Москве, и Московской области.'"
     })
-    public void checkQuestion(String questionNumber, String answer) throws InterruptedException {
+    public void checkQuestion(String questionNumber, String answer) {
 
         MainPage mainPage = new MainPage(driver);
 
@@ -47,7 +47,6 @@ public class CheckAccordionTest {
         //добавить ожидание
         new WebDriverWait(driver, Duration.ofSeconds(3))
                 .until(ExpectedConditions.visibilityOfElementLocated(mainPage.getAccordionPanelBy(questionNumber)));
-
 
         // найти ответ
         WebElement answerElement = mainPage.getAccordionPanel(questionNumber);

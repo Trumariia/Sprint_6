@@ -8,10 +8,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.praktikum.pageobject.OrderDataForm;
 import ru.yandex.praktikum.pageobject.DriverUtils;
 import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.PersonDataForm;
+import java.time.Duration;
 
 public class CreateOrderTest {
     WebDriver driver;
@@ -30,7 +33,7 @@ public class CreateOrderTest {
     public void inputParameters(String driverType, String buttonType,
                                 String name, String surname, String city,
                                 String metroSelect, String color, String telephone,
-                                String date, String term, String comment) throws InterruptedException {
+                                String date, String term, String comment) {
         //запустить браузер
         if (driverType.equals("chrome")) {
             driver = new ChromeDriver();
@@ -49,16 +52,17 @@ public class CreateOrderTest {
             DriverUtils.scrollTo(buttonOrder, driver);
         }
 
-        Thread.sleep(300);
+        // Ожидание, что кнопка станет кликабельной; ожидание не больше 3 секунд
 
         mainPage.getAcceptCookie().click();
 
         //нажать кнопку Заказать
         buttonOrder.click();
 
-        Thread.sleep(1000);
-
         PersonDataForm personForm = new PersonDataForm(driver);
+
+       new WebDriverWait(driver, Duration.ofSeconds(3))
+               .until(ExpectedConditions.visibilityOfElementLocated(personForm.getByName()));
 
         //найти поле Имя, ввести значение
         personForm.getName().sendKeys(name);
@@ -80,13 +84,17 @@ public class CreateOrderTest {
         //найти поле Телефон, ввести телефон
         personForm.getTelephone().sendKeys(telephone);
 
-        Thread.sleep(1000);
+
         //найти кнопку Далее, нажать
         personForm.getButtonNext().click();
 
 
         OrderDataForm form = new OrderDataForm(driver);
         //найти поле Когда привезти самокат? ввести значение
+
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(form.detByDate()));
+
         form.getDate().sendKeys(date);
 
         //найти поле Срок аренды, нажать
@@ -102,7 +110,7 @@ public class CreateOrderTest {
 
         //найти поле Коммент для курьера, ввести текст
         form.getComment().sendKeys(comment);
-        Thread.sleep(1000);
+
         //найти кнопку Заказать, нажать
         form.getCreateButton().click();
 

@@ -8,15 +8,15 @@ public class MainPage {
     private final WebDriver driver ;
     private final By upperButton = By.className("Button_Button__ra12g");
     private final By lowerButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    private final static String accordionPanel = "accordion__panel-";
+    private final static String ACCORDION_PANEL = "accordion__panel-";
     private final String accordionHeading = "accordion__heading-";
     private final By acceptCookie = By.id("rcc-confirm-button");
-    private final static String site = "https://qa-scooter.praktikum-services.ru/";
+    private final static String SITE = "https://qa-scooter.praktikum-services.ru/";
 
     public MainPage (WebDriver driver){
         this.driver = driver;
         // открыть сайт
-        driver.get(site);
+        driver.get(SITE);
     }
 
     public By getAccordionHeadingBy(String suffix) {
@@ -28,7 +28,7 @@ public class MainPage {
     }
 
     public WebElement getAccordionPanel(String suffix) {
-        return driver.findElement(By.id(accordionPanel + suffix));
+        return driver.findElement(By.id(ACCORDION_PANEL + suffix));
     }
 
     public WebElement getUpButton() {
@@ -43,6 +43,6 @@ public class MainPage {
         return driver.findElement(acceptCookie);
     }
 
-    public By getAccordionPanelBy(String suffix) { return By.id(accordionPanel + suffix); }
+    public By getAccordionPanelBy(String suffix) { return By.id(ACCORDION_PANEL + suffix); }
 }
 

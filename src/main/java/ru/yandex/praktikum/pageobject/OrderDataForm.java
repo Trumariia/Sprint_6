@@ -8,7 +8,7 @@ public class OrderDataForm {
     private final WebDriver driver;
     private final By date = By.xpath("//input[@placeholder='* Когда привезти самокат']");
     private final By periodRent = By.xpath("//span[@class='Dropdown-arrow']");
-    private static final String termElement = "//div[@class='Dropdown-option' and text()='%s']";
+    private static final String TERM_ELEMENT = "//div[@class='Dropdown-option' and text()='%s']";
     private final By comment = By.xpath("//input[@placeholder='Комментарий для курьера']");
     private final By createButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     private final By buttonYes = By.xpath("//button[text()='Да']");
@@ -23,12 +23,14 @@ public class OrderDataForm {
         return driver.findElement(date);
     }
 
+    public By detByDate () { return date; }
+
     public WebElement getPeriodRent() {
         return driver.findElement(periodRent);
     }
 
     public WebElement getTermElement(String term) {
-        return driver.findElement(By.xpath(String.format(termElement, term)));
+        return driver.findElement(By.xpath(String.format(TERM_ELEMENT, term)));
     }
 
     public WebElement getColor(String color) {
