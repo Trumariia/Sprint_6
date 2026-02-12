@@ -1,18 +1,12 @@
 package test;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.praktikum.pageobject.OrderDataForm;
-import ru.yandex.praktikum.pageobject.DriverUtils;
 import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.PersonDataForm;
-import java.time.Duration;
 
 public class CreateOrderTest extends BaseTest {
 
@@ -40,83 +34,49 @@ public class CreateOrderTest extends BaseTest {
 
         MainPage mainPage = new MainPage(driver);
 
-        //найти кнопку Заказать
-        WebElement buttonOrder;
+        mainPage.acceptCookie();
+
         if (buttonType.equals("upButton")) {
-            buttonOrder = mainPage.getUpButton();
+            mainPage.clickUpperButton();
         } else {
-            buttonOrder = mainPage.getDownBotton();
-            DriverUtils.scrollTo(buttonOrder, driver);
+            mainPage.clickLowerButton();
         }
 
-        // Ожидание, что кнопка станет кликабельной; ожидание не больше 3 секунд
-
-        mainPage.getAcceptCookie().click();
-
-        //нажать кнопку Заказать
-        buttonOrder.click();
 
         PersonDataForm personForm = new PersonDataForm(driver);
 
-        new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.visibilityOfElementLocated(personForm.getByName()));
 
-        //найти поле Имя, ввести значение
-        personForm.getName().sendKeys(name);
+        personForm.inputName(name);
 
-        //найти поле Фамилия, ввести значение
-        personForm.getSurname().sendKeys(surname);
+        personForm.inputSurname(surname);
 
-        //найти поле Адрес, ввести значение
-        personForm.getAddress().sendKeys(city);
+        personForm.inputAddress(city);
 
-        //найти поле Станция метро, нажать
-        personForm.getMetroStation().click();
+        personForm.changeMetroStation(metroSelect);
 
-        //выбрать станцию метро
-        WebElement metroSelectElement = personForm.getMetroSelect(metroSelect);
-        DriverUtils.scrollTo(metroSelectElement, driver);
-        metroSelectElement.click();
+        personForm.inputTelephone(telephone);
 
-        //найти поле Телефон, ввести телефон
-        personForm.getTelephone().sendKeys(telephone);
-
-
-        //найти кнопку Далее, нажать
-        personForm.getButtonNext().click();
+        personForm.clickButtonNext();
 
 
         OrderDataForm form = new OrderDataForm(driver);
-        //найти поле Когда привезти самокат? ввести значение
 
-        new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.visibilityOfElementLocated(form.detByDate()));
+        form.inputDate(date);
 
-        form.getDate().sendKeys(date);
+        form.inputPeriodRent();
 
-        //найти поле Срок аренды, нажать
-        form.getPeriodRent().click();
+        form.scrollToTermElement(term);
 
-        //выбрать значение в выпадающем списке
-        WebElement termElement = form.getTermElement(term);
-        DriverUtils.scrollTo(termElement, driver);
-        termElement.click();
+        form.selectColor(color);
 
-        //найти поле Цвет, выбрать цвет
-        form.getColor(color).click();
+        form.inputComment(comment);
 
-        //найти поле Коммент для курьера, ввести текст
-        form.getComment().sendKeys(comment);
+        form.clickCreateButton();
 
-        //найти кнопку Заказать, нажать
-        form.getCreateButton().click();
+        form.clickButtonYes();
 
-        //подтвердить заказ
-        form.getButtonYes().click();
+        form.findSuccessOrderWindow();
 
-        //проверка подтверждения
-        WebElement successEl = form.getSuccessOrderWindow();
-        Assertions.assertTrue(successEl.getText().contains("Заказ оформлен"));
     }
 }
 

@@ -2,14 +2,9 @@ package test;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.praktikum.pageobject.DriverUtils;
 import ru.yandex.praktikum.pageobject.MainPage;
-import java.time.Duration;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CheckAccordionTest extends BaseTest {
 
@@ -29,25 +24,13 @@ public class CheckAccordionTest extends BaseTest {
         driver = new ChromeDriver();
         MainPage mainPage = new MainPage(driver);
 
-        //добавить ожидание драйвера
-        new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.visibilityOfElementLocated(mainPage.getAccordionHeadingBy(questionNumber)));
+        mainPage.acceptCookie();
 
-        //скролл до вопроса  Найти вопрос
-        WebElement questionElement = mainPage.getAccordionHeading(questionNumber);
-        DriverUtils.scrollTo(questionElement, driver);
+        //скролл и клик до вопросов
+        mainPage.clickToQuestions(questionNumber);
 
-        // клик на него
-        questionElement.click();
+        // найти ответ и сравнить текст
+        mainPage.checkAnswer(questionNumber, answer);
 
-        //добавить ожидание
-        new WebDriverWait(driver, Duration.ofSeconds(3))
-                .until(ExpectedConditions.visibilityOfElementLocated(mainPage.getAccordionPanelBy(questionNumber)));
-
-        // найти ответ
-        WebElement answerElement = mainPage.getAccordionPanel(questionNumber);
-
-        // сравнить со значением Текста
-        assertEquals(answer, answerElement.getText(), "Ошибка при сравнении текста");
     }
 }

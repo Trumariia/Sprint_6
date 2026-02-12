@@ -3,6 +3,10 @@ package ru.yandex.praktikum.pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class PersonDataForm {
     private final WebDriver driver;
@@ -18,34 +22,40 @@ public class PersonDataForm {
         this.driver = driver;
     }
 
-    public WebElement getName() {
-        return driver.findElement(name);
+    //найти поле Имя, ввести значение
+    public void inputName(String newName) {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(name));
+        driver.findElement(name).sendKeys(newName);
     }
 
-    public By getByName() { return name; }
-
-    public WebElement getSurname() {
-        return driver.findElement(surname);
+    //найти поле Фамилия, ввести значение
+    public void inputSurname(String newSurname) {
+        driver.findElement(surname).sendKeys(newSurname);
     }
 
-    public WebElement getAddress() {
-        return driver.findElement(address);
+    //найти поле Адрес, ввести значение
+    public void inputAddress(String city) {
+        driver.findElement(address).sendKeys(city);
     }
 
-    public WebElement getMetroStation() {
-        return driver.findElement(metroStation);
+    //найти поле Станция метро, нажать
+    public void changeMetroStation(String metroSelect) {
+        driver.findElement(metroStation).click();
+
+        WebElement metroSelectElement = driver.findElement(By.xpath(String.format(METRO_SELECT, metroSelect)));
+        DriverUtils.scrollTo(metroSelectElement, driver);
+        metroSelectElement.click();
     }
 
-    public WebElement getMetroSelect(String metroSelect) {
-        return driver.findElement(By.xpath(String.format(this.METRO_SELECT, metroSelect)));
+    //найти поле Телефон, ввести телефон
+    public void inputTelephone(String newTelephone) {
+        driver.findElement(telephone).sendKeys(newTelephone);
     }
 
-    public WebElement getTelephone() {
-        return driver.findElement(telephone);
-    }
-
-    public WebElement getButtonNext() {
-        return driver.findElement(buttonNext);
+    //найти кнопку Далее, нажать
+    public void clickButtonNext() {
+            driver.findElement(buttonNext).click();
     }
 }
 
